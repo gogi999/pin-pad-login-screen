@@ -21,9 +21,11 @@ const PinCodeInput = () => {
     }
 
     const clear = () => {
-        setPin('');
-        setIsHidden(true);
-        setNumLimit(false);
+        if (!isDisabled) {
+            setPin('');
+            setIsHidden(true);
+            setNumLimit(false);
+        }
     }
 
     const enter = () => {
