@@ -13,10 +13,21 @@ const PinCodeInput = () => {
     buffer.push(<p key="p">Max number of pin digits is 4!</p>);
 
     const addDigit = (digit) => {
-        if (pin.length < 4) {
-            setPin(pin + digit);
-        } else if (pin.length >= 4) {
-            setNumLimit(true);
+        if (!isDisabled) {
+            if (pin.length < 4) {
+                setPin(pin + digit);
+                setIsHidden(true);
+            }
+
+            if (pin.length >= 4 || pin === 'number') {
+                setIsHidden(true);
+                setNumLimit(true);
+            }
+
+            if (pin === 'ERROR') {
+                setIsHidden(false);
+                setNumLimit(true);
+            }
         }
     }
 
@@ -30,7 +41,6 @@ const PinCodeInput = () => {
 
     const enter = () => {
         setIsHidden(false);
-        setNumLimit(false);
 
         if (pin === '1234') {
             setPin('OK');
@@ -44,6 +54,7 @@ const PinCodeInput = () => {
                     setIsDisabled(false);
                     setCount(0);
                     setPin('');
+                    setNumLimit(false);
                 }, 30000);
             }
         }
